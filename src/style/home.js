@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#000080'
+        color: '#191970'
     },
     content: {
         flex: 1,
@@ -40,7 +40,15 @@ const styles = StyleSheet.create({
     iconContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderColor: 'red',
+        borderWidth: 1,
+    },
+    tab: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+        //backgroundColor:'rgba(128,128,128,0.5)'
     },
     icon: {
         width: 30, 

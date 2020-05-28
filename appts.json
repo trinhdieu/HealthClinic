@@ -1,0 +1,58 @@
+{
+	"appts": [
+		{
+			"id": 1,
+			"date": "12/05/2020",
+			"time": "09:00",
+			"room": "201",
+			"service_name": "Khám mắt",
+			"client_name": "Nguyễn Văn A",
+			"medical_staff_name": "Nguyễn Văn B"
+		},
+		{
+			"id": 2,
+			"date": "14/05/2020",
+			"time": "09:00",
+			"room": "202",
+			"service_name": "Khám da liễu",
+			"client_name": "Nguyễn Văn A",
+			"medical_staff_name": "Nguyễn Văn B"
+		},
+		{
+			"id": 3,
+			"date": "14/05/2020",
+			"time": "09:00",
+			"room": "202",
+			"service_name": "Khám da liễu",
+			"client_name": "Nguyễn Văn A",
+			"medical_staff_name": "Nguyễn Văn B"
+		},
+		{
+			"id": 4,
+			"date": "14/05/2020",
+			"time": "09:00",
+			"room": "202",
+			"service_name": "Khám da liễu",
+			"client_name": "Nguyễn Văn A",
+			"medical_staff_name": "Nguyễn Văn B"
+		},
+		{
+			"id": 5,
+			"date": "14/05/2020",
+			"time": "09:00",
+			"room": "202",
+			"service_name": "Khám da liễu",
+			"client_name": "Nguyễn Văn A",
+			"medical_staff_name": "Nguyễn Văn B"
+		},
+		{
+			"id": 6,
+			"date": "14/05/2020",
+			"time": "09:00",
+			"room": "202",
+			"service_name": "Khám da liễu",
+			"client_name": "Nguyễn Văn A",
+			"medical_staff_name": "Nguyễn Văn B"
+		}
+	]
+}

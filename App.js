@@ -6,18 +6,18 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LogIn from './src/component/login';
+import SignIn from './src/component/signin';
 import SignUp from './src/component/signup';
-import Home from './src/component/home';
+import ClientTabNavigator from './src/component/client/tabnavigator';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator headerMode="none">
         <Stack.Screen 
-          name="LogIn" component={LogIn}
+          name="SignIn" component={SignIn}
           options = {{title: "Đăng nhập"}}
         />
         <Stack.Screen 
@@ -25,7 +25,7 @@ export default function App() {
           options = {{title: "Đăng ký"}}
         />
         <Stack.Screen 
-          name="Home" component={Home}
+          name="ClientTabNavigator" component={ClientTabNavigator}
           options = {{title: "Trang chủ"}}
         />
       </Stack.Navigator>

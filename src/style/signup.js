@@ -18,14 +18,16 @@ const styles = StyleSheet.create({
     },
     btnSignup: {
         marginTop: 30,
-        padding: 10,
-        backgroundColor: 'blue',
+        backgroundColor: '#191970',
         textAlign: 'center',
         textAlignVertical: 'center',
-        borderRadius: 5,
+        borderRadius: 10,
+    },
+    text: {
+        padding: 10,
         color: 'white',
         fontSize: 18,
-    },
+    }
 });
 
 export default styles;
