@@ -8,32 +8,27 @@ const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, 
-        backgroundColor: '#d3d3d3'
-    },
-    textContainer: {
-        height: Math.round(screenHeight/8),
         backgroundColor: 'white',
-        marginHorizontal: 10,
+        marginTop: 10
+    },
+    subContainer: {
         marginTop: 10,
-        elevation: 10,
+        marginHorizontal: 50
     },
-    titleContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        marginLeft: 20,
-        alignItems: 'center'
+    label: {
+        fontSize: 18, 
+        color: 'gray'
     },
-    title: {
-        marginLeft: 10,
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#191970'
-    },
-    content: {
-        flex: 1,
-        fontSize: 22,
-        marginLeft: 60
+    txtInfo: {
+        marginTop: 5,
+        color: 'black', 
+        paddingHorizontal: 10, 
+        fontSize: 20, 
+        fontWeight:'bold',
+        borderWidth: 2,
+        borderColor: 'gray',
+        height: 50,
+        textAlignVertical: 'center'
     },
     btnContainer: {
         marginTop: Math.round(screenHeight/40),
@@ -49,7 +44,7 @@ const styles = StyleSheet.create({
     btnText: {
         color: 'white',
         fontSize: 18,
-        padding: 10,
+        padding: 7
     },
     loading: {
         elevation: 11,
@@ -60,7 +55,13 @@ const styles = StyleSheet.create({
         bottom: 0,
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    serviceBar: {
+        marginTop: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+    },
 });
 
 export default styles;

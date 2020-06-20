@@ -4,9 +4,10 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center'
     },
     service: {
-        flex: 1,
+        height: 80,
         flexDirection: 'row',
         borderRadius: 15,
         marginHorizontal: 30,
@@ -18,14 +19,14 @@ const styles = StyleSheet.create({
     icon:{
         width: 50,
         height: 50,
-        marginHorizontal: 15,
+        marginHorizontal: 20,
     },
     serviceName: {
         fontWeight: 'bold',
         fontSize: 25,
     },
     textContainer: {
-        flex: 0.3,
+        flex: 0.07,
         flexDirection: 'row',
         alignItems: 'center',
         marginHorizontal: 10
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
     },
     btnContainer: {
-        flex: 0.7,
+        flex: 0.13,
         justifyContent: 'center',
         alignItems: 'center'
     },

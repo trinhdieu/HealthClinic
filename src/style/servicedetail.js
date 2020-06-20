@@ -19,13 +19,17 @@ const styles = StyleSheet.create({
     },
     desciptionContainer: {
         flex: 3,
-    },
-    description: {
-        textAlign: 'justify',
         marginHorizontal: 30,
         borderWidth: 2,
         borderRadius: 10,
         borderColor: 'gray'
+    },
+    description: {
+        margin: 20,
+    },
+    txtDescription: {
+        fontSize: 20,
+        textAlign:'justify',
     },
     btnContainer: {
         flex: 1,

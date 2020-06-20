@@ -3,7 +3,7 @@ import {
     StyleSheet,
 } from 'react-native';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -31,10 +31,13 @@ export const styles = StyleSheet.create({
     title : {
         fontSize: 30,
         fontWeight: 'bold',
-        color: '#191970'
+        color: '#191970',
+        textAlign: 'center'
     },
     require:{
         fontSize: 8,
         color: 'gray'
     }
 });
+
+export default styles;
