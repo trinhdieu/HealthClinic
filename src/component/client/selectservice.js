@@ -10,7 +10,7 @@ import {
     FlatList,
 } from 'react-native';
 import styles from '../../style/selectservice';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 
 export default function SelectService({route, navigation}) {
     const {userId, authorization} = route.params;
@@ -24,7 +24,7 @@ export default function SelectService({route, navigation}) {
     useEffect(
         () => navigation.addListener('focus', () => {
             setLoading(true);
-            fetch('http://' + ip + ':8080/clinicservices', {
+            fetch(domain + '/clinicservices', {
                 method: 'GET',
                 headers: {
                     Accept: '*/*',

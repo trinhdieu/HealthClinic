@@ -11,7 +11,7 @@ import {
     Alert
 } from 'react-native';
 import styles from '../../style/adminservicedetail';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -25,7 +25,7 @@ export default function ServiceDetail({route, navigation}) {
 
     function updateService() {
         setLoading(true);
-        fetch('http://' + ip + ':8080/clinicservices/' + service.id, {
+        fetch(domain + '/clinicservices/' + service.id, {
                 method: 'PUT',
                 headers: {
                     Accept: '*/*',
@@ -86,7 +86,7 @@ export default function ServiceDetail({route, navigation}) {
 
     function deleteService() {
         setLoading(true);
-        fetch('http://' + ip + ':8080/clinicservices/' + service.id, {
+        fetch(domain + '/clinicservices/' + service.id, {
                 method: 'DELETE',
                 headers: {
                     Accept: '*/*',
@@ -138,26 +138,26 @@ export default function ServiceDetail({route, navigation}) {
     }
 
     return (
-        <ScrollView style={styles.container}>
-            {isLoading &&
-            <View style={[styles.loading, {backgroundColor: 'rgba(192,192,192,0.7)'}]}></View>
-            }
-            {isLoading &&
+        <>
+        {isLoading &&
+            <View style={[styles.loading, {backgroundColor: 'rgba(192,192,192, 0.7)'}]}></View>
+        }
+        {isLoading &&
             <View style={styles.loading}>
                 <ActivityIndicator size={100} color='#191970'/>
             </View>
-            }
-
+        }
+        <ScrollView style={styles.container}>
             <View style={styles.subContainer}>
                 <Text style={styles.label}>Tên dịch vụ</Text>
-                <TextInput style={styles.txtInfo} value={name} editable={editable}
+                <TextInput style={styles.txtInfo} value={name} editable={editable && !isLoading}
                     onChangeText={(text) => setName(text)}/>
             </View>
                 
             <View style={styles.subContainer}>
                 <Text style={styles.label}>Mô tả</Text>
                 <TextInput style={[styles.txtInfo, {height: Math.round(screenHeight*0.4), textAlignVertical: 'top'}]} 
-                    value={des} editable={editable} multiline={true}
+                    value={des} editable={editable && !isLoading} multiline={true}
                     onChangeText={(text) => setDes(text)}/>
             </View>
                 
@@ -165,13 +165,15 @@ export default function ServiceDetail({route, navigation}) {
             <View style={[styles.btnContainer, {flexDirection: 'row'}]}>
                 <TouchableOpacity 
                     style={[styles.button, {marginRight: 80}]}
-                    onPress={() => setEditable(true)} 
+                    onPress={() => setEditable(true)}
+                    disabled={isLoading} 
                 >
                     <Text style={styles.btnText}>Sửa</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
                     style={[styles.button, {backgroundColor: 'red'}]}
+                    disabled={isLoading}
                     onPress={() => {
                         Alert.alert(
                             "Thông báo",
@@ -196,7 +198,8 @@ export default function ServiceDetail({route, navigation}) {
             </View>
             :
             <View style={[styles.btnContainer, {flexDirection: 'row'}]}>
-                <TouchableOpacity 
+                <TouchableOpacity
+                    disabled={isLoading} 
                     style={[styles.button, {marginRight: 80, backgroundColor: 'red'}]}
                     onPress={() => {
                         setEditable(false);
@@ -209,6 +212,7 @@ export default function ServiceDetail({route, navigation}) {
 
                 <TouchableOpacity 
                     style={[styles.button, {backgroundColor: 'green'}]}
+                    disabled={isLoading}
                     onPress={() => {
                         if (name.length === 0) {
                             Alert.alert(
@@ -230,5 +234,6 @@ export default function ServiceDetail({route, navigation}) {
             </View>
             }       
         </ScrollView>
+        </>
     );
 }

@@ -13,7 +13,7 @@ import {
 import styles from '../../style/calendardetail';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Picker} from '@react-native-community/picker';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -37,7 +37,7 @@ export default function CalendarDetail({route, navigation}) {
 
     function updateCalendar() {
         setLoading(true);
-        fetch('http://' + ip + ':8080/calendars/' + calendar.id + '?clinicServiceId=' + 
+        fetch(domain + '/calendars/' + calendar.id + '?clinicServiceId=' + 
             calendar.clinicServiceId + '&medicalStaffId=' + calendar.medicalStaffId, {
                 method: 'PUT',
                 headers: {
@@ -109,7 +109,7 @@ export default function CalendarDetail({route, navigation}) {
     }
 
     function deleteCalendar() {
-        fetch('http://' + ip + ':8080/calendars/' + calendar.id, {
+        fetch(domain + '/calendars/' + calendar.id, {
                 method: 'DELETE',
                 headers: {
                     Accept: '*/*',
@@ -197,16 +197,16 @@ export default function CalendarDetail({route, navigation}) {
     }
 
     return (
-        <ScrollView style={styles.container}>
-            {isLoading &&
+        <>
+        {isLoading &&
             <View style={[styles.loading, {backgroundColor: 'rgba(192,192,192,0.7)'}]}></View>
-            }
-            {isLoading &&
+        }
+        {isLoading &&
             <View style={styles.loading}>
                 <ActivityIndicator size={100} color='#191970'/>
             </View>
-            }
-
+        }
+        <ScrollView style={styles.container}>
             {(showDatePicker1 && editable) && (
                 <DateTimePicker
                     testID="dateTimePicker"
@@ -267,6 +267,7 @@ export default function CalendarDetail({route, navigation}) {
             </View>
 
             <TouchableOpacity
+                disabled={isLoading}
                 onPress={() =>{
                     if(editable) setShowDatePicker1(true);
                 }}
@@ -278,6 +279,7 @@ export default function CalendarDetail({route, navigation}) {
             </TouchableOpacity>
             
             <TouchableOpacity
+                disabled={isLoading}
                 onPress={() =>{
                     if(editable) setShowDatePicker2(true);
                 }}
@@ -289,6 +291,7 @@ export default function CalendarDetail({route, navigation}) {
             </TouchableOpacity>
 
             <TouchableOpacity
+                disabled={isLoading}
                 onPress={() =>{
                     if(editable) setShowDatePicker3(true);
                 }}
@@ -336,6 +339,7 @@ export default function CalendarDetail({route, navigation}) {
                 <View style={[styles.btnContainer, {flexDirection: 'row'}]}>
                     <TouchableOpacity 
                         style={[styles.button, {marginRight: 80}]}
+                        disabled={isLoading}
                         onPress={() => setEditable(true)} 
                     >
                         <Text style={styles.btnText}>Sửa</Text>
@@ -343,6 +347,7 @@ export default function CalendarDetail({route, navigation}) {
 
                     <TouchableOpacity 
                         style={[styles.button, {backgroundColor: 'red'}]}
+                        disabled={isLoading}
                         onPress={() => {
                             Alert.alert(
                                 "Thông báo",
@@ -370,6 +375,7 @@ export default function CalendarDetail({route, navigation}) {
                 <View style={[styles.btnContainer, {flexDirection: 'row'}]}>
                     <TouchableOpacity 
                         style={[styles.button, {marginRight: 80, backgroundColor: 'red'}]}
+                        disabled={isLoading}
                         onPress={() => {
                             setEditable(false);
                             setDate(changeDateFormat(calendar.date, 1));
@@ -382,6 +388,7 @@ export default function CalendarDetail({route, navigation}) {
 
                     <TouchableOpacity 
                         style={[styles.button, {backgroundColor: 'green'}]}
+                        disabled={isLoading}
                         onPress={() => {
                             if (checkTime())
                                 updateCalendar();
@@ -405,5 +412,6 @@ export default function CalendarDetail({route, navigation}) {
                 ) : <></>
             }       
         </ScrollView>
+        </>
     );
 }

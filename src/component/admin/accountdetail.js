@@ -10,7 +10,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import styles from '../../style/accountdetail';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 
 export default function AccountDetail({route, navigation}) {
     const {selectRole, user} = route.params;

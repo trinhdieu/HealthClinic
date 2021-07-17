@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import styles from '../../style/viewappointment';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 
 export default function ViewAppointment({route, navigation}) {
     const {userId, authorization} = route.params;
@@ -21,7 +21,7 @@ export default function ViewAppointment({route, navigation}) {
     React.useEffect(
         () => navigation.addListener('focus', () => {
             setLoading(true);
-            fetch('http://' + ip + ':8080/getClientAppointments/' + userId, {
+            fetch(domain + '/getClientAppointments/' + userId, {
                 method: 'GET',
                 headers: {
                     Accept: '*/*',

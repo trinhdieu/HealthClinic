@@ -11,7 +11,7 @@ import styles from '../../style/appointmentcontroller';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 
 export default function AppointmentController({route, navigation}) {
     const {userId, authorization} = route.params;
@@ -30,7 +30,7 @@ export default function AppointmentController({route, navigation}) {
     getAppt = async () => {
         var d = await date;
         setLoading(true);
-        fetch('http://' + ip + ':8080/getAppointmentsByDate?date=' + changeDateFormat(d, 0), {
+        fetch(domain + '/getAppointmentsByDate?date=' + changeDateFormat(d, 0), {
             method: 'POST',
             headers: {
                 Accept: '*/*',
@@ -101,31 +101,36 @@ export default function AppointmentController({route, navigation}) {
     return (
         <View style={styles.container}>
             <View style={styles.dateBar}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    disabled={isLoading}
+                    onPress={async () =>{
+                        await datetime.setDate(datetime.getDate() - 1);
+                        await setDate(showDate(datetime));
+                        getAppt();
+                    }}
+                >
                     <AntDesign
                         name='caretleft' size={35} color='#191970'
-                        onPress={async () =>{
-                            await datetime.setDate(datetime.getDate() - 1);
-                            await setDate(showDate(datetime));
-                            getAppt();
-                        }}
                     />
                 </TouchableOpacity>
 
                 <TouchableOpacity
+                    disabled={isLoading}
                     onPress={() => setShowDatePicker(true)}
                 >
                     <Text  style={styles.dateBox}>{date}</Text>
                 </TouchableOpacity>
                 
-                <TouchableOpacity>
+                <TouchableOpacity
+                    disabled={isLoading}
+                    onPress={async () =>{
+                        await datetime.setDate(datetime.getDate() + 1);
+                        await setDate(showDate(datetime));
+                        getAppt();
+                    }}
+                >
                     <AntDesign
                         name='caretright' size={35} color='#191970' 
-                        onPress={async () =>{
-                            await datetime.setDate(datetime.getDate() + 1);
-                            await setDate(showDate(datetime));
-                            getAppt();
-                        }}
                     />
                 </TouchableOpacity>
             </View>
@@ -183,6 +188,7 @@ export default function AppointmentController({route, navigation}) {
 
             <View style={styles.btnContainer}>
                 <TouchableOpacity 
+                    disabled={isLoading}
                     onPress={() => {
                     }} 
                     style={styles.btnFind}

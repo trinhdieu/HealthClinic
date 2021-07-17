@@ -13,7 +13,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Picker} from '@react-native-community/picker';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -40,7 +40,7 @@ export default function CalendarController({route, navigation}) {
     getCal = async () => {
         var d = await date;
         setLoading(true);
-        fetch('http://' + ip + ':8080/getCalendarsByClinicServiceAndDate?id=' + selectService + '&date=' + changeDateFormat(d, 0), {
+        fetch(domain + '/getCalendarsByClinicServiceAndDate?id=' + selectService + '&date=' + changeDateFormat(d, 0), {
             method: 'POST',
             headers: {
                 Accept: '*/*',
@@ -75,7 +75,7 @@ export default function CalendarController({route, navigation}) {
 
     getService = () => {
         setLoading(true);
-        fetch('http://' + ip + ':8080/clinicservices', {
+        fetch(domain + '/clinicservices', {
                 method: 'GET',
                 headers: {
                     Accept: '*/*',
@@ -213,57 +213,60 @@ export default function CalendarController({route, navigation}) {
             </View>
 
             <View style={styles.dateBar}>
-                <TouchableOpacity>
+                <TouchableOpacity disabled={isLoading}
+                    onPress={async () =>{
+                        await datetime.setDate(datetime.getDate() - 1);
+                        await setDate(showDate(datetime));
+                        if (services.length === 0) {
+                            Alert.alert(
+                                "Thông báo",
+                                "Chưa có dịch vụ",
+                                [
+                                    {
+                                        text: "OK",
+                                        style: "cancel"
+                                    }
+                                ]
+                            );
+                        } else {
+                            await getCal();
+                        }
+                    }}
+                >
                     <AntDesign
                         name='caretleft' size={35} color='#191970'
-                        onPress={async () =>{
-                            await datetime.setDate(datetime.getDate() - 1);
-                            await setDate(showDate(datetime));
-                            if (services.length === 0) {
-                                Alert.alert(
-                                    "Thông báo",
-                                    "Chưa có dịch vụ",
-                                    [
-                                        {
-                                            text: "OK",
-                                            style: "cancel"
-                                        }
-                                    ]
-                                );
-                            } else {
-                                await getCal();
-                            }
-                        }}
                     />
                 </TouchableOpacity>
 
                 <TouchableOpacity
+                    disabled={isLoading}
                     onPress={() => setShowDatePicker(true)}
                 >
                     <Text  style={styles.dateBox}>{date}</Text>
                 </TouchableOpacity>
                 
-                <TouchableOpacity>
+                <TouchableOpacity disabled={isLoading}
+                    onPress={async () =>{
+                        await datetime.setDate(datetime.getDate() + 1);
+                        await setDate(showDate(datetime));
+                        if (services.length === 0) {
+                            Alert.alert(
+                                "Thông báo",
+                                "Chưa có dịch vụ",
+                                [
+                                    {
+                                        text: "OK",
+                                        style: "cancel"
+                                    }
+                                ]
+                            );
+                        } else {
+                            await getCal();
+                        }
+                    }}
+                >
                     <AntDesign
                         name='caretright' size={35} color='#191970' 
-                        onPress={async () =>{
-                            await datetime.setDate(datetime.getDate() + 1);
-                            await setDate(showDate(datetime));
-                            if (services.length === 0) {
-                                Alert.alert(
-                                    "Thông báo",
-                                    "Chưa có dịch vụ",
-                                    [
-                                        {
-                                            text: "OK",
-                                            style: "cancel"
-                                        }
-                                    ]
-                                );
-                            } else {
-                                await getCal();
-                            }
-                        }}
                     />
                 </TouchableOpacity>
             </View>
@@ -288,6 +291,7 @@ export default function CalendarController({route, navigation}) {
                             data={cals}
                             renderItem={({item}) => (
                                 <TouchableOpacity style={[styles.item,{backgroundColor: (item.state ? '#90ee90' : '#e6e6fa')}]}
+                                    disabled={isLoading}
                                     onPress={() => navigation.navigate('CalendarDetail', {authorization: authorization, calendar: item})}
                                 >
                                     <View style={{flexDirection: 'row'}}>
@@ -327,6 +331,7 @@ export default function CalendarController({route, navigation}) {
                             navigation.navigate('AddCalendar', {authorization: authorization, services: services});
                     }} 
                     style={[styles.btnFind, {padding: 0}]}
+                    disabled={isLoading}
                 >
                     <Text style={styles.btnText}>Thêm</Text>
                 </TouchableOpacity>

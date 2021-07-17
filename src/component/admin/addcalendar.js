@@ -10,7 +10,7 @@ import {
     ActivityIndicator,
     Alert
 } from 'react-native';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 import styles from '../../style/addcalendar';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Picker} from '@react-native-community/picker';
@@ -43,7 +43,7 @@ export default function AddCalendar({route, navigation}) {
 
     function createCalendar() {
         setLoading(true);
-        fetch('http://' + ip + ':8080/calendars?clinicServiceId=' + selectService + '&medicalStaffId=' + selectStaff, {
+        fetch(domain + '/calendars?clinicServiceId=' + selectService + '&medicalStaffId=' + selectStaff, {
                 method: 'POST',
                 headers: {
                     Accept: '*/*',
@@ -129,7 +129,7 @@ export default function AddCalendar({route, navigation}) {
 
     function getMedicStaff() {
         setLoading(true);
-        fetch('http://' + ip + ':8080/getUsersByRole?role=MEDIC', {
+        fetch(domain + '/getUsersByRole?role=MEDIC', {
                 method: 'POST',
                 headers: {
                     Accept: '*/*',
@@ -224,16 +224,16 @@ export default function AddCalendar({route, navigation}) {
     }
 
     return (
-        <ScrollView style={styles.container}>
-            {isLoading &&
+        <>
+        {isLoading &&
             <View style={[styles.loading, {backgroundColor: 'rgba(192,192,192,0.7)'}]}></View>
-            }
-            {isLoading &&
+        }
+        {isLoading &&
             <View style={styles.loading}>
                 <ActivityIndicator size={100} color='#191970'/>
             </View>
-            }
-
+        }
+        <ScrollView style={styles.container}>
             {showDatePicker1 && (
                 <DateTimePicker
                     testID="dateTimePicker"
@@ -303,17 +303,17 @@ export default function AddCalendar({route, navigation}) {
                 
             <View style={styles.subContainer}>
                 <Text style={styles.label}>Ngày</Text>
-                <Text style={styles.txtInfo} onPress={() => setShowDatePicker1(true)}>{date}</Text>
+                <Text style={styles.txtInfo} onPress={() => {if (!isLoading) setShowDatePicker1(true);}}>{date}</Text>
             </View>
                 
             <View style={styles.subContainer}>
                 <Text style={styles.label}>Thời gian bắt đầu</Text>
-                <Text style={styles.txtInfo} onPress={() => setShowDatePicker2(true)}>{timeS}</Text>
+                <Text style={styles.txtInfo} onPress={() => {if (!isLoading) setShowDatePicker2(true);}}>{timeS}</Text>
             </View>
 
             <View style={styles.subContainer}>
                 <Text style={styles.label}>Thời gian kết thúc</Text>
-                <Text style={styles.txtInfo} onPress={() => setShowDatePicker3(true)}>{timeE}</Text>
+                <Text style={styles.txtInfo} onPress={() => {if (!isLoading) setShowDatePicker3(true)}}>{timeE}</Text>
             </View>
             <View style={styles.subContainer}>
                 <Text style={styles.label}>Nhân viên y tế</Text>
@@ -335,6 +335,7 @@ export default function AddCalendar({route, navigation}) {
             <View style={[styles.btnContainer, {flexDirection: 'row'}]}>
                 <TouchableOpacity 
                     style={[styles.button, {marginRight: 80}]}
+                    disabled={isLoading}
                     onPress={() => {
                         if (checkTime()) {
                             createCalendar();
@@ -357,6 +358,7 @@ export default function AddCalendar({route, navigation}) {
 
                 <TouchableOpacity 
                     style={[styles.button, {backgroundColor: 'red'}]}
+                    disabled={isLoading}
                     onPress={() => {
                         Alert.alert(
                             "Thông báo",
@@ -381,5 +383,6 @@ export default function AddCalendar({route, navigation}) {
             </View>
                 
         </ScrollView>
+        </>
     );
 }

@@ -9,7 +9,7 @@ import {
     FlatList,
     ActivityIndicator,
 } from 'react-native';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import styles from '../../style/makeappointment';
@@ -53,7 +53,7 @@ export default function MakeAppointment({route, navigation}) {
     function getSuitableCals(date, time, serviceId) {
         setLoading(true);
         setNoCal(false);
-        return fetch('http://'+ ip + ':8080/getCalendars', {
+        return fetch(domain + '/getCalendars', {
                 method: 'POST',
                 headers: {
                     Accept: '*/*',
@@ -219,7 +219,7 @@ export default function MakeAppointment({route, navigation}) {
 
                                             <View style={{flexDirection: 'row'}}>
                                                 <FontAwesome5 name={'clinic-medical'} color='white' size={25} solid/>
-                                                <Text style={styles.txtList}>{item.room}</Text>
+                                                <Text style={styles.txtList}>{item.medicalStaffRoom}</Text>
                                             </View>
                                         </View>
                                     </TouchableOpacity>

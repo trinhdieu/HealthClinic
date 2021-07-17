@@ -9,7 +9,7 @@ import {
     Alert, 
     TouchableOpacity
 } from 'react-native';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 import {Picker} from '@react-native-community/picker';
 import styles from '../../style/personalinformation';
 import {AuthContext} from '../../../App';
@@ -40,7 +40,7 @@ export default function PersonalInformation({route, navigation}) {
     }, []);
 
     function getInfo() {
-        fetch('http://'+ ip + ':8080/users/' + userId, {
+        fetch(domain + '/users/' + userId, {
             method: 'GET',
             headers: {
                 Accept: '*/*',
@@ -75,7 +75,7 @@ export default function PersonalInformation({route, navigation}) {
 
     function updateInfo() {
         setLoading(true);
-        fetch('http://'+ ip + ':8080/users/' + userId, {
+        fetch(domain + '/users/' + userId, {
                 method: 'PUT',
                 headers: {
                     Accept: '*/*',
@@ -155,14 +155,6 @@ export default function PersonalInformation({route, navigation}) {
         tmp = y + '-' + ((m > 9) ? m : '0' + m) + '-' + ((d > 9) ? d : '0' + d);
         return tmp;
     }
-
-    const onChange = async (event, selectedDate) => {
-        const currentDate = await selectedDate || datetime;
-        setShowDatePicker(false);
-        setDatetime(currentDate);
-        tmp = await showDate(currentDate);
-        await setDateOfBirth(tmp);
-    };
 
     function checkNameFormat () {
         if (name.length === 0) 
@@ -244,7 +236,13 @@ export default function PersonalInformation({route, navigation}) {
                     mode={'date'}
                     is24Hour={true}
                     display="default"
-                    onChange={onChange}
+                    onChange={(event, selectedDate) => {
+                        const currentDate = selectedDate || datetime;
+                        setShowDatePicker(false);
+                        setDatetime(currentDate);
+                        tmp = showDate(currentDate);
+                        setDateOfBirth(tmp);
+                    }}
                 />
             )}   
 

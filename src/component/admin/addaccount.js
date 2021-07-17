@@ -8,7 +8,7 @@ import {
     ScrollView,
     Alert
 } from 'react-native';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 import styles from '../../style/addaccount';
 
 export default function AddAccount({route, navigation}) {
@@ -35,7 +35,7 @@ export default function AddAccount({route, navigation}) {
 
     function createAccount() {
         setLoading(true);
-        fetch('http://'+ ip + ':8080/sign-up', {
+        fetch(domain + '/sign-up', {
             method: 'POST',
             headers: {
                 Accept: '*/*',
@@ -219,22 +219,23 @@ export default function AddAccount({route, navigation}) {
     }
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            {isLoading &&
+        <>
+        {isLoading &&
             <View style={[styles.loading, {backgroundColor: 'rgba(192,192,192,0.7)'}]}></View>
-            }
-            {isLoading &&
+        }
+        {isLoading &&
             <View style={styles.loading}>
                 <ActivityIndicator size={100} color='#191970'/>
             </View>
-            }
-
+        }
+        <ScrollView>
             <Text style={styles.title}>{"Tạo tài khoản " + roleList.get(selectRole).toLowerCase()}</Text>
             <TextInput
                 onChangeText={(text) => {
                     setCheckName(true);
                     setName(text);
                 }}
+                editable={!isLoading}
                 underlineColorAndroid={(checkName && !checkNameFormat()) ? 'red' : '#191970'}
                 style={styles.textInput}
                 placeholder={'Họ và tên'}
@@ -246,6 +247,7 @@ export default function AddAccount({route, navigation}) {
                     setCheckEmail(true);
                     setEmail(text.toLocaleLowerCase());
                 }}
+                editable={!isLoading}
                 underlineColorAndroid={(checkEmail && !checkEmailFormat()) ? 'red' : '#191970'}
                 style={styles.textInput}
                 placeholder={'Email'}
@@ -258,6 +260,7 @@ export default function AddAccount({route, navigation}) {
                     setCheckPhone(true);
                     setPhone(text);
                 }}
+                editable={!isLoading}
                 underlineColorAndroid={(checkPhone && !checkPhoneFormat()) ? 'red' : '#191970'}
                 style={styles.textInput}
                 placeholder={'Số điện thoại'}
@@ -277,6 +280,7 @@ export default function AddAccount({route, navigation}) {
                     setCheckRoom(true);
                     setRoom(text);
                 }}
+                editable={!isLoading}
                 underlineColorAndroid={(checkRoom && !checkRoomFormat()) ? 'red' : '#191970'}
                 style={styles.textInput}
                 placeholder={'Phòng'}
@@ -289,6 +293,7 @@ export default function AddAccount({route, navigation}) {
                     setCheckPassword(true);
                     setPassword(text);
                 }}
+                editable={!isLoading}
                 underlineColorAndroid={(checkPassword && !checkPasswordFormat()) ? 'red' : '#191970'}
                 style={[styles.textInput, {marginBottom: 5}]}
                 placeholder={'Mật khẩu'}
@@ -302,6 +307,7 @@ export default function AddAccount({route, navigation}) {
                     setCheckSubmitPwd(true);
                     setSubmitPwd(text);
                 }}
+                editable={!isLoading}
                 underlineColorAndroid={(checkSubmitPwd && !checkSubmitPwdFormat()) ? 'red' : '#191970'}
                 style={styles.textInput}
                 placeholder={'Xác nhận mật khẩu'}
@@ -310,6 +316,7 @@ export default function AddAccount({route, navigation}) {
             />
             <TouchableOpacity
                 style={styles.btnSignup}
+                disabled={isLoading}
                 onPress={() => {
                     if (checkInput())
                         createAccount();
@@ -320,5 +327,6 @@ export default function AddAccount({route, navigation}) {
                 <Text style={styles.text}>Tạo tài khoản</Text>
             </TouchableOpacity>
         </ScrollView>
+        </>
     );
 }

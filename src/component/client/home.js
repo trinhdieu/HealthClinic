@@ -6,7 +6,7 @@ import {
     ScrollView,
     TouchableOpacity,
 } from 'react-native';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 import styles from '../../style/home';
 
 export default function Home({route, navigation}) {

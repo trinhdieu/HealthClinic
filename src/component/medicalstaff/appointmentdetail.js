@@ -11,7 +11,7 @@ import {
     Alert
 } from 'react-native';
 import styles from '../../style/adminappointmentdetail';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 
 const screenHeight = Dimensions.get('window').height;
 

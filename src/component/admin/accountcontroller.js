@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import styles from '../../style/accountcontroller';
 import {Picker} from '@react-native-community/picker';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const screenHeight = Dimensions.get('window').height;
@@ -36,7 +36,7 @@ export default function AccountController({route, navigation}) {
 
     getUsersByRole = () => {
         setLoading(true);
-        fetch('http://' + ip + ':8080/getUsersByRole?role=' + selectRole, {
+        fetch(domain + '/getUsersByRole?role=' + selectRole, {
                 method: 'POST',
                 headers: {
                     Accept: '*/*',

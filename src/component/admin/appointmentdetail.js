@@ -11,7 +11,7 @@ import {
     Alert
 } from 'react-native';
 import styles from '../../style/adminappointmentdetail';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -39,7 +39,7 @@ export default function AppointmentDetail({route, navigation}) {
     }
 
     function deleteAppt() {
-        fetch('http://' + ip + ':8080/appointments/' + appt.id, {
+        fetch(domain + '/appointments/' + appt.id, {
                 method: 'DELETE',
                 headers: {
                     Accept: '*/*',
@@ -89,16 +89,16 @@ export default function AppointmentDetail({route, navigation}) {
     }
 
     return (
-        <ScrollView style={styles.container}>
-            {isLoading &&
+        <>
+        {isLoading &&
             <View style={[styles.loading, {backgroundColor: 'rgba(192,192,192,0.7)'}]}></View>
-            }
-            {isLoading &&
+        }
+        {isLoading &&
             <View style={styles.loading}>
                 <ActivityIndicator size={100} color='#191970'/>
             </View>
-            }
-
+        }
+        <ScrollView style={styles.container}>
             <View style={styles.subContainer}>
                 <Text style={styles.label}>Dịch vụ</Text>
                 <Text style={styles.txtInfo}>{appt.clinicServiceName}</Text>
@@ -137,6 +137,7 @@ export default function AppointmentDetail({route, navigation}) {
             <View style={[styles.btnContainer, {flexDirection: 'row'}]}>
                 <TouchableOpacity 
                     style={[styles.button, {backgroundColor: 'red'}]}
+                    disabled={isLoading}
                     onPress={() => {
                         Alert.alert(
                             "Thông báo",
@@ -161,5 +162,6 @@ export default function AppointmentDetail({route, navigation}) {
                 </TouchableOpacity>
             </View>       
         </ScrollView>
+        </>
     );
 }

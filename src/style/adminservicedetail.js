@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         padding: 7
     },
     loading: {
-        elevation: 11,
+        elevation:11,
         position: 'absolute',
         left: 0,
         right: 0,

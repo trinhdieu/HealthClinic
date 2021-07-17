@@ -11,7 +11,7 @@ import styles from '../../style/appointmentcontroller';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {ip as ip} from '../../../ipconfig.json';
+import {domain as domain} from '../../../ipconfig.json';
 
 export default function ViewAppointment({route, navigation}) {
     const {userId, authorization} = route.params;
@@ -30,7 +30,7 @@ export default function ViewAppointment({route, navigation}) {
     getAppt = async () => {
         var d = await changeDateFormat(date, 0);
         setLoading(true);
-        fetch('http://' + ip + ':8080/getMedicalStaffAppointmentsByDate/' + userId + "?date=" + d, {
+        fetch(domain + '/getMedicalStaffAppointmentsByDate/' + userId + "?date=" + d, {
             method: 'POST',
             headers: {
                 Accept: '*/*',

@@ -10,7 +10,7 @@ import {
     ScrollView,
     Alert
 } from 'react-native';
-import {ip as ip} from './ipconfig.json';
+import {domain as domain} from './ipconfig.json';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ClientTabNavigator from './src/component/client/tabnavigator';
@@ -166,7 +166,7 @@ function SignUp({navigation}) {
 
     function signUp() {
         setLoading(true);
-        fetch('http://'+ ip + ':8080/sign-up', {
+        fetch(domain + '/sign-up', {
             method: 'POST',
             headers: {
                 Accept: '*/*',
@@ -341,22 +341,23 @@ function SignUp({navigation}) {
     }
 
     return (
-        <ScrollView contentContainerStyle={signupstyles.container}>
-            {isLoading &&
+        <>
+        {isLoading &&
             <View style={[signinstyles.loading, {backgroundColor: 'rgba(192,192,192,0.7)'}]}></View>
-            }
-            {isLoading &&
+        }
+        {isLoading &&
             <View style={signinstyles.loading}>
                 <ActivityIndicator size={100} color='#191970'/>
             </View>
-            }
-
+        }
+        <ScrollView contentContainerStyle={signupstyles.container}>
             <Text style={signupstyles.title}>Đăng ký</Text>
             <TextInput
                 onChangeText={(text) => {
                     setCheckName(true);
                     setName(text);
                 }}
+                editable={!isLoading}
                 underlineColorAndroid={(checkName && !checkNameFormat()) ? 'red' : '#191970'}
                 style={signupstyles.textInput}
                 placeholder={'Họ và tên'}
@@ -368,6 +369,7 @@ function SignUp({navigation}) {
                     setCheckEmail(true);
                     setEmail(text.toLocaleLowerCase());
                 }}
+                editable={!isLoading}
                 underlineColorAndroid={(checkEmail && !checkEmailFormat()) ? 'red' : '#191970'}
                 style={signupstyles.textInput}
                 style={signupstyles.textInput}
@@ -381,6 +383,7 @@ function SignUp({navigation}) {
                     setCheckPhone(true);
                     setPhone(text);
                 }}
+                editable={!isLoading}
                 underlineColorAndroid={(checkPhone && !checkPhoneFormat()) ? 'red' : '#191970'}
                 style={signupstyles.textInput}
                 placeholder={'Số điện thoại'}
@@ -393,6 +396,7 @@ function SignUp({navigation}) {
                     setCheckPassword(true);
                     setPassword(text);
                 }}
+                editable={!isLoading}
                 underlineColorAndroid={(checkPassword && !checkPasswordFormat()) ? 'red' : '#191970'}
                 style={[signupstyles.textInput, {marginBottom: 5}]}
                 placeholder={'Mật khẩu'}
@@ -406,6 +410,7 @@ function SignUp({navigation}) {
                     setCheckSubmitPwd(true);
                     setSubmitPwd(text);
                 }}
+                editable={!isLoading}
                 underlineColorAndroid={(checkSubmitPwd && !checkSubmitPwdFormat()) ? 'red' : '#191970'}
                 style={signupstyles.textInput}
                 placeholder={'Xác nhận mật khẩu'}
@@ -414,6 +419,7 @@ function SignUp({navigation}) {
             />
             <TouchableOpacity
                 style={signupstyles.btnSignup}
+                disabled={isLoading}
                 onPress={() => {
                     if (checkInput())
                         signUp();
@@ -424,6 +430,7 @@ function SignUp({navigation}) {
                 <Text style={signupstyles.text}>ĐĂNG KÝ</Text>
             </TouchableOpacity>
         </ScrollView>
+        </>
     );
 }
 
@@ -463,7 +470,7 @@ export default function App({ navigation }) {
                 let userToken, userId, tokenType, role;
                 let result = 0;
                 try {
-                    let response = await fetch('http://'+ ip + ':8080/login', {
+                    let response = await fetch(domain + '/login', {
                         method: 'POST',
                         headers: {
                             Accept: '*/*',
